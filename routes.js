@@ -1,12 +1,30 @@
 const express = require("express");
 const Product = require("./models/Products");
-const cors = require("cors");
+const User = require("./models/Users");
 
 const routes = express.Router();
 
-routes.get("/products", cors(), async (req, res, next) => {
+routes.get("/products", async (req, res, next) => {
   const products = await Product.find();
   products && res.status(200) && res.send(products);
+});
+
+routes.post("/add-user", async (req, res, next) => {
+  try {
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
+    });
+    console.log("user", user);
+    const addedUser = await user.save();
+    res.status(200);
+    res.send(addedUser);
+  } catch (error) {
+    res.status(401);
+    res.send({ error: error.message });
+  }
 });
 
 routes.post("/add", async (req, res) => {
