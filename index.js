@@ -14,6 +14,19 @@ mongoose
 
     app.use(express.json());
 
+    app.use((req, res, next) => {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Authorization, Content-Type"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, PUT, DELETE, POST, PATCH"
+      );
+      next();
+    });
+
     app.use("/api", routes);
 
     app.listen(port, () => {
