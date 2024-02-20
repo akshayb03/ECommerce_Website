@@ -5,7 +5,8 @@ const port = process.env.PORT;
 const express = require("express");
 
 const app = express();
-const routes = require("./routes");
+const productRoutes = require("./routes/product");
+const userRoutes = require("./routes/user");
 
 mongoose
   .connect(mongoURI, {})
@@ -18,7 +19,7 @@ mongoose
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader(
         "Access-Control-Allow-Headers",
-        "Authorization, Content-Type"
+        "Origin, X-Requested-With, x-access-token, Content-Type, Accept, Authorization"
       );
       res.setHeader(
         "Access-Control-Allow-Methods",
@@ -27,7 +28,9 @@ mongoose
       next();
     });
 
-    app.use("/api", routes);
+    app.use("/api", productRoutes);
+
+    app.use("/api", userRoutes);
 
     app.listen(port, () => {
       console.log(`Server started at port ${port}`);
