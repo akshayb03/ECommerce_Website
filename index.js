@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 const productRoutes = require("./routes/product");
 const userRoutes = require("./routes/user");
+const paymentRoutes = require("./routes/payment");
 
 mongoose
   .connect(mongoURI, {})
@@ -31,6 +32,8 @@ mongoose
     app.use("/api", productRoutes);
 
     app.use("/api", userRoutes);
+
+    app.use("/payments", paymentRoutes);
 
     app.listen(port, () => {
       console.log(`Server started at port ${port}`);

@@ -7,7 +7,6 @@ const authentication = (req, res, next) => {
       if (err) {
         res.json({ auth: false });
       } else {
-        console.log("result", result);
         next();
       }
     });
